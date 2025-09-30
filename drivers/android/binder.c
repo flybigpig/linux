@@ -3655,7 +3655,7 @@ BINDER_DEBUG_ENTRY(transaction_log);
 static int __init binder_init(void)
 {
 	int ret;
-
+	//创建名为binder的工作队列
 	binder_deferred_workqueue = create_singlethread_workqueue("binder");
 	if (!binder_deferred_workqueue)
 		return -ENOMEM;
@@ -3664,8 +3664,10 @@ static int __init binder_init(void)
 	if (binder_debugfs_dir_entry_root)
 		binder_debugfs_dir_entry_proc = debugfs_create_dir("proc",
 						 binder_debugfs_dir_entry_root);
+	// 注册misc设备
 	ret = misc_register(&binder_miscdev);
 	if (binder_debugfs_dir_entry_root) {
+		//在debugfs文件系统中创建一系列的文件
 		debugfs_create_file("state",
 				    S_IRUGO,
 				    binder_debugfs_dir_entry_root,
